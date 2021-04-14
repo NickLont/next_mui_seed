@@ -7,12 +7,12 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const ProductsPage = () => {
+const CharactersPage = () => {
   const classes = useStyles()
 
   return (
     <div className={classes.container}>
-      <p>Products Page</p>
+      <p>Characters Page</p>
       <Button variant="contained" color="primary">
         Primary
       </Button>
@@ -20,4 +20,4 @@ const ProductsPage = () => {
   )
 }
 
-export default ProductsPage
+export default CharactersPage
