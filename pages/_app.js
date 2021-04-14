@@ -4,6 +4,8 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../theme'
 import Head from 'next/head'
+import Layout from 'components/Layout'
+import GlobalStyles from 'styles/GlobalStyles'
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -22,7 +24,10 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <GlobalStyles />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </>
   )
