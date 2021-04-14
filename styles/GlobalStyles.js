@@ -16,7 +16,7 @@ const useStyles = makeStyles(() =>
         height: '100%',
         width: '100%'
       },
-      '#root': {
+      '#__next': {
         height: '100%',
         width: '100%'
       }
