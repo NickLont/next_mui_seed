@@ -1,0 +1,6 @@
+{
+    "compilerOptions": {
+        // enable absolute imports ("components/folder")
+        "baseUrl": "."
+    }
+}
