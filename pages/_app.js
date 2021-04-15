@@ -6,6 +6,8 @@ import theme from '../theme'
 import Layout from 'components/Layout'
 import GlobalStyles from 'styles/GlobalStyles'
 import Head from 'next/head'
+import { ApolloProvider } from '@apollo/client'
+import client from 'apollo-client'
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -22,13 +24,15 @@ function MyApp({ Component, pageProps }) {
         <title>My site</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <GlobalStyles />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <GlobalStyles />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </ApolloProvider>
     </>
   )
 }

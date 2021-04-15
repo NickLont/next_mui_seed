@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
-    overflow: 'auto'
+    flex: 1
   }
 }))
 
