@@ -48,7 +48,8 @@ export async function getStaticProps() {
   return {
     props: {
       characters: data.characters.results
-    } // will be passed to the page component as props
+    }, // will be passed to the page component as props
+    revalidate: 300
   }
 }
 
