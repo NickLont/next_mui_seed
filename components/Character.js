@@ -22,7 +22,12 @@ const useStyles = makeStyles((theme) => ({
   },
   statusContainer: {
     display: 'flex',
-    margin: theme.spacing(1, 0, 2)
+    margin: theme.spacing(1, 0, 2),
+    alignItems: 'center'
+  },
+  icon: {
+    marginBottom: 4,
+    marginRight: 4
   }
 }))
 
@@ -62,6 +67,7 @@ const Character = ({ character }) => {
             <FiberManualRecordRoundedIcon
               fontSize="small"
               style={{ color: character.status === 'Alive' ? '#55CC44' : '#d63d2e' }}
+              className={classes.icon}
             />
             <Typography variant="body1" color="primary">
               {character.status}

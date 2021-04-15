@@ -1,6 +1,11 @@
+import PropTypes from 'prop-types'
 import client from '../apollo-client'
 import { GET_CHARACTERS_QUERY } from 'graphQL/queries'
 import { makeStyles } from '@material-ui/core'
+import Link from 'next/link'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import { default as MaterialLink } from '@material-ui/core/Link'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -25,18 +30,23 @@ const CharactersPage = ({ characters }) => {
       <p>Characters List, Statically Rendered:</p>
       <div className={classes.container}>
         {characters.map((character) => (
-          <button
+          <Link
+            href={`/character/${character.id}`}
             key={character.id}
-            className={classes.characterContainer}
-            onClick={() => console.log(`Character id: ${character.id}`)}>
-            <p>
-              <b>{character.name}</b>
-            </p>
-            <p>
-              {character.species}, {character.gender}
-            </p>
-            <img src={character.image} alt="" />
-          </button>
+            value={character.id}
+            passHref>
+            <Card className={classes.characterContainer}>
+              <CardContent>
+                <p>
+                  <b>{character.name}</b>
+                </p>
+                <p>
+                  {character.species}, {character.gender}
+                </p>
+                <img src={character.image} alt="" />
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </>
@@ -53,6 +63,10 @@ export async function getStaticProps() {
     }, // will be passed to the page component as props
     revalidate: 300
   }
+}
+
+CharactersPage.propTypes = {
+  characters: PropTypes.array
 }
 
 export default CharactersPage
