@@ -30,7 +30,9 @@ const CharactersPage = ({ characters }) => {
             <p>
               <b>{character.name}</b>
             </p>
-            <p>{character.gender}</p>
+            <p>
+              {character.species}, {character.gender}
+            </p>
             <img src={character.image} alt="" />
           </button>
         ))}
@@ -43,7 +45,6 @@ export async function getStaticProps() {
   const { data } = await client.query({
     query: GET_CHARACTERS_QUERY
   })
-  console.log('data: ', data)
   return {
     props: {
       characters: data.characters.results
