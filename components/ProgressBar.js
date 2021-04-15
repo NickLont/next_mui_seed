@@ -29,7 +29,6 @@ const ProgressBar = ({ isAnimating }) => {
         value={progress * 100}
         variant="determinate"
         color="secondary"
-        // style={{ minHeight: 20 }}
       />
     </Container>
   )

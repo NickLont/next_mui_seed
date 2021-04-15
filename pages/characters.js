@@ -5,10 +5,12 @@ import { makeStyles } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    padding: theme.spacing(2)
   },
   characterContainer: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(1),
     '&:hover': {
       cursor: 'pointer'
     }
@@ -19,7 +21,7 @@ const CharactersPage = ({ characters }) => {
   const classes = useStyles()
 
   return (
-    <div>
+    <>
       <p>Characters List, Statically Rendered:</p>
       <div className={classes.container}>
         {characters.map((character) => (
@@ -37,7 +39,7 @@ const CharactersPage = ({ characters }) => {
           </button>
         ))}
       </div>
-    </div>
+    </>
   )
 }
 

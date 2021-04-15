@@ -6,11 +6,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 const useStyles = makeStyles(() => ({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    width: '100%'
+  mainContainer: {
+    overflow: 'auto'
   }
 }))
 
@@ -40,12 +37,16 @@ const Layout = ({ children }) => {
   }, [router.events])
 
   return (
-    <div className={classes.container}>
+    <>
       <NavBar />
       <ProgressBar isAnimating={routeChanging} />
-      <div>{children}</div>
-    </div>
+      <main className={classes.mainContainer}>{children}</main>
+    </>
   )
+}
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired
 }
 
 export default Layout
