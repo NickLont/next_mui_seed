@@ -52,6 +52,12 @@ const GET_CHARACTER_QUERY = gql`
         air_date
         episode
       }
+      image
+      status
+      location {
+        id
+        name
+      }
     }
   }
 `

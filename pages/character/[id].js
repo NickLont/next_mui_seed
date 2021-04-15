@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client'
 import { Typography } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
 import client from 'apollo-client'
 import Character from 'components/Character'
 import { GET_CHARACTERS_QUERY, GET_CHARACTER_QUERY } from 'graphQL/queries'
@@ -10,17 +9,17 @@ import { makeStyles } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2),
-    display: 'flex'
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
   },
   characterContainer: {
-    // display: 'flex',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // height: '100%'
+    alignSelf: 'center',
+    paddingTop: theme.spacing(10)
   }
 }))
 
-const CharacterPage = () => {
+const CharacterPage = ({ character }) => {
   const classes = useStyles()
   const router = useRouter()
   const { id } = router.query
@@ -28,7 +27,9 @@ const CharacterPage = () => {
   const { loading, error, data } = useQuery(GET_CHARACTER_QUERY, {
     variables: { id }
   })
-  console.log('data: ', data)
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>{JSON.stringify(error)}</p>
 
   return (
     <div className={classes.container}>
@@ -36,34 +37,36 @@ const CharacterPage = () => {
         Character Page
       </Typography>
       <div className={classes.characterContainer}>
-        <Character />
+        <Character character={character} />
       </div>
     </div>
   )
 }
 
-// export async function getStaticPaths() {
-//   const { data } = await client.query({
-//     query: GET_CHARACTERS_QUERY
-//   })
-//   const paths = data.characters.results.map((character) => character.id)
-//   console.log('paths: ', paths)
+export async function getStaticPaths() {
+  const { data } = await client.query({
+    query: GET_CHARACTERS_QUERY
+  })
+  const paths = data.characters.results.map((character) => ({ params: { id: character.id } }))
 
-//   return {
-//     paths,
-//     fallback: false
-//   }
-// }
+  return {
+    paths,
+    fallback: false
+  }
+}
 
-// export async function getStaticProps(props) {
-//   console.log('props: ', props)
+export async function getStaticProps({ params }) {
+  const { data } = await client.query({
+    query: GET_CHARACTER_QUERY,
+    variables: params
+  })
+  const { character } = data
 
-//   const character = {}
-//   return {
-//     props: {
-//       character
-//     }
-//   }
-// }
+  return {
+    props: {
+      character
+    }
+  }
+}
 
 export default CharacterPage
