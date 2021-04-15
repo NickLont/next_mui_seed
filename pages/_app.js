@@ -21,7 +21,8 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>My site</title>
+        <title>Rick and Morty page</title>
+        <meta property="og:title" key="title" />
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <ApolloProvider client={client}>

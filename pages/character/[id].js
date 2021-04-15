@@ -5,6 +5,7 @@ import Character from 'components/Character'
 import { GET_CHARACTERS_QUERY, GET_CHARACTER_QUERY } from 'graphQL/queries'
 import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core'
+import Head from 'next/head'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,6 +34,10 @@ const CharacterPage = ({ character }) => {
 
   return (
     <div className={classes.container}>
+      <Head>
+        <title>{character.name}</title>
+        <meta property="og:title" key="title" />
+      </Head>
       <Typography variant="h5" color="primary" component="p">
         Character Page
       </Typography>
