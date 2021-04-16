@@ -9,8 +9,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import useForm from 'lib/useForm'
 import { useState } from 'react'
-import axios from 'axios'
-import Router from 'next/router'
 import useUser from '../lib/useUser'
 import fetchJson from '../lib/fetchJson'
 

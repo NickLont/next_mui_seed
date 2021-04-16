@@ -24,7 +24,7 @@ const CharacterPage = ({ character }) => {
   return (
     <div className={classes.container}>
       <Head>
-        <title>{character.name}</title>
+        <title>{character?.name}</title>
         <meta property="og:title" key="title" />
       </Head>
       <Typography variant="h5" color="primary" component="p">
