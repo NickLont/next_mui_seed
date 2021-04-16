@@ -11,6 +11,8 @@ import useForm from 'lib/useForm'
 import { useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
+import useUser from '../lib/useUser'
+import fetchJson from '../lib/fetchJson'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,24 +37,27 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles()
   const [error, setError] = useState(null)
-  const { inputs, handleChange, resetForm } = useForm({
-    username: '',
-    password: ''
+  const { inputs, handleChange } = useForm({
+    username: ''
+  })
+  const { mutateUser } = useUser({
+    redirectTo: '/profile',
+    redirectIfFound: true
   })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post('/api/user', inputs)
-      // Save user to local storage
-      localStorage.setItem('user', JSON.stringify(res.data))
-      resetForm()
-      setError(null)
-      Router.push('/profile')
-
-      // Navigate to profile page
+      await mutateUser(
+        fetchJson('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(inputs)
+        })
+      )
     } catch (error) {
-      setError(error.message)
+      console.error('An unexpected error happened:', error)
+      setError(error.data.message)
     }
   }
 
@@ -63,7 +68,10 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Log in using you GitHub account
+        </Typography>
+        <Typography component="h1" variant="h6">
+          (Or mine: NickLont)
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
@@ -77,19 +85,6 @@ const Login = () => {
             autoComplete="username"
             autoFocus
             value={inputs.username}
-            onChange={handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={inputs.password}
             onChange={handleChange}
           />
           {error && (

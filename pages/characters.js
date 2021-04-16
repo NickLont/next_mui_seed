@@ -52,15 +52,15 @@ const CharactersPage = ({ characters }) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data } = await client.query({
     query: GET_CHARACTERS_QUERY
   })
   return {
     props: {
       characters: data.characters.results
-    }, // will be passed to the page component as props
-    revalidate: 300
+    } // will be passed to the page component as props
+    // revalidate: 300
   }
 }
 

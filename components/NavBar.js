@@ -4,10 +4,19 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Link from 'next/link'
 import useUser from 'lib/useUser'
+import fetchJson from 'lib/fetchJson'
 import { Avatar } from '@material-ui/core'
+import { useRouter } from 'next/router'
 
 const NavBar = () => {
-  const { user, logout } = useUser({ redirectTo: '/login' })
+  const { user, mutateUser } = useUser({ redirectTo: '/login' })
+  const router = useRouter()
+
+  const logout = async (e) => {
+    e.preventDefault()
+    await mutateUser(fetchJson('/api/logout'))
+    router.push('/login')
+  }
 
   return (
     <AppBar position="static">
@@ -22,27 +31,27 @@ const NavBar = () => {
             <Typography variant="subtitle1">Characters</Typography>
           </Link>
         </Button>
-        {!user && (
+        {user?.isLoggedIn && (
+          <Button color="inherit">
+            <Link href="/profile">
+              <Typography variant="subtitle1">Profile</Typography>
+            </Link>
+          </Button>
+        )}
+        {!user?.isLoggedIn && (
           <Button color="inherit">
             <Link href="/login">
               <Typography variant="subtitle1">Login</Typography>
             </Link>
           </Button>
         )}
-        {user && (
+        {user?.isLoggedIn && (
           <div style={{ marginLeft: 'auto' }}>
-            <Button color="inherit">
-              <Link href="/profile">
-                <Typography
-                  variant="subtitle1"
-                  style={{ textTransform: 'none' }}>{`Profile ${user.username}`}</Typography>
-              </Link>
-              <Avatar alt="Remy Sharp" src={user.avatarUrl} style={{ marginLeft: 8 }} />
-            </Button>
             <Button color="inherit" onClick={logout}>
               <Typography variant="subtitle1" style={{ textTransform: 'none' }}>
-                Logout
+                {`Logout ${user?.login}`}
               </Typography>
+              <Avatar alt="Remy Sharp" src={user?.avatarUrl} style={{ marginLeft: 16 }} />
             </Button>
           </div>
         )}
