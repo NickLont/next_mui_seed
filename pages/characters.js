@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core'
 import Link from 'next/link'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import { default as MaterialLink } from '@material-ui/core/Link'
 
 const useStyles = makeStyles((theme) => ({
   container: {

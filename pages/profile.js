@@ -2,7 +2,8 @@ import { Typography } from '@material-ui/core'
 import useUser from 'lib/useUser'
 
 const ProfilePage = () => {
-  const { user } = useUser({ redirectTo: '/profile' })
+  const { user } = useUser()
+  //   const { user } = useUser({ redirectTo: '/login' })
 
   // Server-render loading state
   if (!user || user.isLoggedIn === false) {

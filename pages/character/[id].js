@@ -1,9 +1,7 @@
-import { useQuery } from '@apollo/client'
 import { Typography } from '@material-ui/core'
 import client from 'apollo-client'
 import Character from 'components/Character'
 import { GET_CHARACTERS_QUERY, GET_CHARACTER_QUERY } from 'graphQL/queries'
-import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core'
 import Head from 'next/head'
 
@@ -22,15 +20,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CharacterPage = ({ character }) => {
   const classes = useStyles()
-  const router = useRouter()
-  const { id } = router.query
-
-  const { loading, error, data } = useQuery(GET_CHARACTER_QUERY, {
-    variables: { id }
-  })
-
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>{JSON.stringify(error)}</p>
 
   return (
     <div className={classes.container}>
