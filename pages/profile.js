@@ -2,18 +2,33 @@ import { Typography } from '@material-ui/core'
 import withSession from '../lib/session'
 
 const ProfilePage = ({ user }) => {
-  // const { user } = useUser()
-  // const { user } = useUser({ redirectTo: '/login' })
-
-  // Server-render loading state
-  if (!user || user.isLoggedIn === false) {
-    return <div>Loading...</div>
+  const githubUrl = (login) => {
+    return `https://api.github.com/users/${login}`
   }
 
   return (
     <div>
-      <Typography>Your profile</Typography>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <h1>Your GitHub profile</h1>
+      <h2>
+        This page uses{' '}
+        <a href="https://nextjs.org/docs/basic-features/pages#server-side-rendering">
+          Server-side Rendering (SSR)
+        </a>{' '}
+        and{' '}
+        <a href="https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering">
+          getServerSideProps
+        </a>
+      </h2>
+
+      {user?.isLoggedIn && (
+        <>
+          <p style={{ fontStyle: 'italic' }}>
+            Public data, from <a href={githubUrl(user.login)}>{githubUrl(user.login)}</a>, reduced
+            to `login` and `avatar_url`.
+          </p>
+          <pre>{JSON.stringify(user, null, 2)}</pre>
+        </>
+      )}
     </div>
   )
 }

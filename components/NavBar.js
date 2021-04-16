@@ -32,11 +32,18 @@ const NavBar = () => {
           </Link>
         </Button>
         {user?.isLoggedIn && (
-          <Button color="inherit">
-            <Link href="/profile">
-              <Typography variant="subtitle1">Profile</Typography>
-            </Link>
-          </Button>
+          <>
+            <Button color="inherit">
+              <Link href="/profile">
+                <Typography variant="subtitle1">Profile SSR</Typography>
+              </Link>
+            </Button>
+            <Button color="inherit">
+              <Link href="/profile-sg">
+                <Typography variant="subtitle1">Profile SG</Typography>
+              </Link>
+            </Button>
+          </>
         )}
         {!user?.isLoggedIn && (
           <Button color="inherit">
