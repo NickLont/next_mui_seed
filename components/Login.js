@@ -8,8 +8,9 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import useForm from 'lib/useForm'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
+import Router from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,25 +34,26 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles()
-
-  const { inputs, handleChange, resetForm, clearForm } = useForm({
+  const [error, setError] = useState(null)
+  const { inputs, handleChange, resetForm } = useForm({
     username: '',
     password: ''
   })
 
-  //   useEffect(() => {
-  //     console.log('inputs: ', inputs)
-  //   }, [inputs])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    let res
     try {
-      res = await axios.post('/api/user', inputs)
+      const res = await axios.post('/api/user', inputs)
+      // Save user to local storage
+      localStorage.setItem('user', JSON.stringify(res.data))
+      resetForm()
+      setError(null)
+      Router.push('/profile')
+
+      // Navigate to profile page
     } catch (error) {
-      console.log('error: ', error)
+      setError(error.message)
     }
-    console.log('res: ', res)
   }
 
   return (
@@ -90,6 +92,11 @@ const Login = () => {
             value={inputs.password}
             onChange={handleChange}
           />
+          {error && (
+            <Typography component="h1" variant="body1" color="error">
+              {error}
+            </Typography>
+          )}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
