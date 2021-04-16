@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import useForm from 'lib/useForm'
 import { useEffect } from 'react'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,12 +39,19 @@ const Login = () => {
     password: ''
   })
 
-  useEffect(() => {
-    console.log('inputs: ', inputs)
-  }, [inputs])
+  //   useEffect(() => {
+  //     console.log('inputs: ', inputs)
+  //   }, [inputs])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    let res
+    try {
+      res = await axios.post('/api/user', inputs)
+    } catch (error) {
+      console.log('error: ', error)
+    }
+    console.log('res: ', res)
   }
 
   return (
@@ -55,7 +63,7 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
